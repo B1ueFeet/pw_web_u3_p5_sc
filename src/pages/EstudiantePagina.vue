@@ -14,4 +14,8 @@ export default {
 
 <style>
 
+body{
+  background: #8E7AB5;
+}
+
 </style>
