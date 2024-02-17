@@ -1,16 +1,17 @@
 <template>
- <div class="contenedor">
-    <h1>Componente Estudiante</h1>
-
-    <div class="consulta">
-      <h3 for="">ID de Estudiante</h3>
+  <div class="contenedor">
+    <div v-if="showId" class="consulta">
+      <h3>{{ message }}</h3>
       <input v-model="id" type="text" />
-      <button @click="consultarPorId">Consultar</button>
-      <button @click="eliminar">Eliminar</button>
+      <button v-if="funcion === 'consultar' || funcion === 'actualizar' " @click="consultarPorId">
+        Consultar
+      </button>
+      <button v-if="funcion === 'eliminar'" @click="eliminar">Eliminar</button>
     </div>
 
-    <div class="insertar">
-      <h3 for="">Datos de Estudiante</h3>
+    <div v-if="showCampos" class="insertar">
+      <h3 v-if="!showId" for="">{{message}}</h3>
+      <h3 v-if="funcion === 'actualizar'" for="">Actualice los datos del Estudiante</h3>
       <label for="">Nombre:</label>
       <input v-model="name" type="text" />
       <label for="">Apellido:</label>
@@ -30,11 +31,12 @@
       <label for="">Celular:</label>
       <input v-model="celular" type="text" />
 
-      <button @click="insertar">Insertar</button>
-      <button @click="actualizar">Actualizar</button>
+      <button v-if="funcion === 'guardar'" @click="insertar">Guardar</button>
+      <button v-if="funcion === 'actualizar'" @click="actualizar">
+        Actualizar
+      </button>
     </div>
- </div>
-
+  </div>
 </template>
 
 <script>
@@ -45,6 +47,21 @@ import {
   eliminarFacade,
 } from "../helpers/clienteEstudiante.js";
 export default {
+  props: {
+    funcion: {
+      type: String,
+      required: true,
+    },
+    showId: {
+      type: Boolean,
+      required: true,
+    },
+    showCampos: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
   data() {
     return {
       id: null,
@@ -57,9 +74,32 @@ export default {
       pais: null,
       celular: null,
       fechaNacimiento: null,
+      message: null,
     };
   },
+  mounted() {
+    console.log("Se monto el componente ");
+    this.handleMessage();
+  },
   methods: {
+    handleMessage() {
+      switch (this.funcion) {
+        case "consultar":
+          this.message = "Ingrese el Id del elemento que desea Consultar";
+          break;
+        case "eliminar":
+          this.message = "Ingrese el Id del elemento que desea Eliminar";
+          break;
+        case "guardar":
+          this.message = "Ingrese los datos del Nuevo Estudiante";
+          break;
+        case "actualizar":
+          this.message = "Ingrese el ID del estudiante a Actualizar";
+          break;
+        default:
+          this.message = ""
+      }
+    },
     async consultarPorId() {
       const data = await consultarEstudianteFacade(this.id);
       console.log("desde componente\n");
@@ -118,7 +158,7 @@ export default {
   flex-direction: column;
   width: 400px;
   border-radius: 30px;
-  margin: 0 auto;
+  margin: 20px auto;
   background-color: #b784b7;
 }
 
@@ -128,7 +168,7 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 300px;
-  margin: 10px auto;
+  margin: 20px auto;
   border-radius: 15px;
   background-color: #e493b3;
 }

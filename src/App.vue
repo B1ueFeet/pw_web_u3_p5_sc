@@ -33,11 +33,10 @@ img{
 }
 
 footer{
-     position:fixed;
+  position:fixed;
    left:0px;
    bottom:0px;
    height:30px;
-   width:100%;
-
+   width:20%;
 }
 </style>
