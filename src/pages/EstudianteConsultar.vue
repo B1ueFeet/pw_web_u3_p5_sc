@@ -6,6 +6,14 @@
 <script>
 import Estudiante from '@/components/Estudiante.vue'
 export default {
+   created(){
+    
+    console.log(this.$route)
+    console.log(this.$route.params.id)
+    console.log(this.$route.query)
+    console.log(this.$route.query.anio)
+    console.log(this.$route.query.edad)
+  },
   components: {
     Estudiante
   }
