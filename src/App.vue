@@ -2,6 +2,7 @@
   <img alt="Vue logo" src="./assets/logo.png">
 <h1>Universidad central del Ecuador</h1>
 <h2>Facultad de Ingenieria Ciencias Fisicas y Matematica</h2>
+<NavBar/>
   <router-view/>
 <footer>Todos los derechos reservados &#174;</footer>
 
@@ -9,10 +10,12 @@
 
 <script>
 import EstudiantePaginaVue from './pages/EstudiantePagina.vue'
+import NavBar from './components/NavBar.vue'
 export default {
   name: 'App',
   components: {
-    EstudiantePaginaVue
+    EstudiantePaginaVue,
+    NavBar
   }
 }
 </script>
